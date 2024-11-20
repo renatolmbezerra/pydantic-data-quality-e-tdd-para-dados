@@ -1,2 +1,2 @@
 def funcao_projeto():
-    pass
+    return "projeto_01"
