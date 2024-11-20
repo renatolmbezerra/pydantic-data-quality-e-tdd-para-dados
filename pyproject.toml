@@ -1,0 +1,34 @@
+[tool.poetry]
+name = "pydantic-data-quality-e-tdd-para-dados"
+version = "0.1.0"
+description = ""
+authors = ["Renato Macedo <renatolmb@hotmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+mkdocs = "^1.6.1"
+mkdocs-mermaid2-plugin = {extras = ["test"], version = "^1.2.1"}
+mkdocs-material = "^9.5.45"
+mkdocstrings = {extras = ["python"], version = "^0.27.0"}
+taskipy = "^1.14.0"
+isort = "^5.13.2"
+black = "^24.10.0"
+pytest = "^8.3.3"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.taskipy.tasks]
+format = """
+isort .
+black .
+"""
+kill = "kill -9 $(lsof -t -i :8000)"
+test = "pytest -v"
+run = """
+python app/main.py
+"""
+doc = "mkdocs serve"
