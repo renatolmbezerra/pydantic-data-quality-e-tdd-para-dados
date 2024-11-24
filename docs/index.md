@@ -1,20 +1,15 @@
 # Projeto Data Quality
 
-Essa é minha documentação
+Fluxo para desenvolvimento e montagem da ETL:
 
 ```mermaid
-graph TD
-    A[Inicio: Receber solicitação] --> B{A solicitação está completa?}
-    B -- Sim --> C[Registrar solicitação]
-    B -- Não --> D[Solicitar mais informações]
-    D --> A
-    C --> E{Aprovação necessária?}
-    E -- Sim --> F[Enviar para aprovação]
-    E -- Não --> G[Processar solicitação]
-    F --> H{Aprovada?}
-    H -- Sim --> G
-    H -- Não --> I[Notificar rejeição]
-    G --> J[Fim: Concluir processo]
-    I --> J
+graph TD;
+    A[Configura Variáveis] --> B[Ler o Banco SQL];
+    B --> V[Validação do Schema de Entrada];
+    V -->|Falha| X[Alerta de Erro];
+    V -->|Sucesso| C[Transformar os KPIs];
+    C --> Y[Validação do Schema de Saída];
+    Y -->|Falha| Z[Alerta de Erro];
+    Y -->|Sucesso| D[Salvar no DuckDB];
 
 ```
