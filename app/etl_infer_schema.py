@@ -6,7 +6,6 @@ import pandera as pa
 from dotenv import load_dotenv
 from sqlalchemy import create_engine
 
-#from schema import ProdutoSchema, ProductSchemaKPI
 
 def load_settings():
     """Carrega as configurações a partir de variáveis de ambiente."""
@@ -22,17 +21,8 @@ def load_settings():
     }
     return settings
 
-
 def extrair_do_sql(query: str) -> pd.DataFrame:
-    """
-    Extrai dados do banco de dados SQL usando a consulta fornecida.
 
-    Args:
-        query: A consulta SQL para extrair dados.
-
-    Returns:
-        Um DataFrame do Pandas contendo os dados extraídos.
-    """
     settings = load_settings()
 
     # Criar a string de conexão com base nas configurações
@@ -46,8 +36,6 @@ def extrair_do_sql(query: str) -> pd.DataFrame:
 
     return df_crm
 
-
-
 if __name__ == "__main__":
     
     query = "SELECT * FROM produtos_bronze"
@@ -56,6 +44,5 @@ if __name__ == "__main__":
 
     with open("schema_crm.py", "w", encoding="utf-8") as arquivo:
          arquivo.write(schema_crm.to_script())
-
 
     print(schema_crm)
