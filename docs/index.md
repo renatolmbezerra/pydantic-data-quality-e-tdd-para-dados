@@ -1,6 +1,8 @@
 # Projeto Data Quality
 
-Fluxo para desenvolvimento e montagem da ETL:
+Para desenvolver o desafio de negócio, a montagem da ETL foi feita conforme abaixo:
+
+## Fluxo
 
 ```mermaid
 graph TD;
@@ -13,3 +15,7 @@ graph TD;
     Y -->|Sucesso| D[Salvar no DuckDB];
 
 ```
+
+## Contrato de dados
+
+::: app.schema.ProdutoSchema
