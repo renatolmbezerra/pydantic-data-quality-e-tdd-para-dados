@@ -22,7 +22,7 @@ def load_settings():
     }
     return settings
 
-pa.check_output(ProdutoSchema, lazy=True)
+@pa.check_output(ProdutoSchema, lazy=True)
 def extrair_do_sql(query: str) -> pd.DataFrame:
     """
     Extrai dados do banco de dados SQL usando a consulta fornecida.
@@ -50,7 +50,7 @@ def extrair_do_sql(query: str) -> pd.DataFrame:
 
 if __name__ == "__main__":
     
-    query = "SELECT * FROM produtos_bronze_email"
+    query = "SELECT * FROM produtos_bronze"
     df_crm = extrair_do_sql(query=query)
 
     print(df_crm)

@@ -2,7 +2,7 @@ import pandera as pa
 from pandera.typing import DataFrame, Series
 
 
-class ProdutoSchema(pa.DataFrameSchema):
+class ProdutoSchema(pa.SchemaModel):
     """
     Especificação do schema para validação de DataFrames de produtos.
     """
