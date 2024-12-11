@@ -28,3 +28,10 @@ class ProdutoSchema(pa.SchemaModel):
     class Config:
         coerce = True  # Converte os tipos automaticamente
         strict = True  # Bloqueia colunas extras
+
+
+class ProductSchemaKPI(pa.SchemaModel):
+
+    valor_total_estoque: Series[float] = pa.Field(ge=0)  # O valor total em estoque deve ser >= 0
+    categoria_normalizada: Series[str]  # Assume-se que a categoria será uma string, não precisa de check específico além de ser uma string
+    disponibilidade: Series[bool]  # Disponibilidade é um booleano, então não precisa de check específico
