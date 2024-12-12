@@ -6,8 +6,7 @@ import pandera as pa
 from dotenv import load_dotenv
 from sqlalchemy import create_engine
 
-from schema import ProdutoSchema, ProductSchemaKPI
-
+from app.schema import ProdutoSchema, ProductSchemaKPI
 
 def load_settings():
     """Carrega as configurações a partir de variáveis de ambiente."""
@@ -23,7 +22,7 @@ def load_settings():
     }
     return settings
 
-# @pa.check_output(ProdutoSchema, lazy=True)
+@pa.check_output(ProdutoSchema, lazy=True)
 def extrair_do_sql(query: str) -> pd.DataFrame:
     """
     Extrai dados do banco de dados SQL usando a consulta fornecida.
@@ -95,6 +94,7 @@ def load_to_duckdb(df: pd.DataFrame, table_name: str, db_file: str = 'my_duckdb.
     
     # Fechar a conexão
     con.close()
+
 
 if __name__ == "__main__":
     

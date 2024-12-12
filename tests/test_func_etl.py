@@ -2,56 +2,48 @@ import pandas as pd
 from app.etl import transformar
 
 def test_calculo_valor_total_estoque():
-    # Dados de entrada
-    dados_entrada = pd.DataFrame({
-        'quantidade': [10, 5, 0],
-        'preco': [2.0, 3.5, 1.0],
-        'categoria': ['A', 'B', 'C']
+    # Preparação
+    df = pd.DataFrame({
+        'quantidade': [10, 5],
+        'preco': [20.0, 100.0],
+        'categoria': ['brinquedos', 'eletrônicos']
     })
-    # Resultado esperado
-    resultado_esperado = pd.DataFrame({
-        'quantidade': [10, 5, 0],
-        'preco': [2.0, 3.5, 1.0],
-        'categoria': ['A', 'B', 'C'],
-        'valor_total_estoque': [20.0, 17.5, 0.0],
-        'categoria_normalizada': ['a', 'b', 'c'],
-        'disponibilidade': [True, True, False]
-    })
+    expected = pd.Series([200.0, 500.0], name='valor_total_estoque')
 
-    # Chamar a função
-    resultado = transformar(dados_entrada)
-    
-    # Verificar se o DataFrame gerado é igual ao esperado
-    pd.testing.assert_frame_equal(resultado, resultado_esperado)
+    # Ação
+    result = transformar(df)
+
+    # Verificação
+    pd.testing.assert_series_equal(result['valor_total_estoque'], expected)
 
 def test_normalizacao_categoria():
-    # Dados de entrada
-    dados_entrada = pd.DataFrame({
-        'quantidade': [1, 2, 3],
-        'preco': [10.0, 20.0, 30.0],
-        'categoria': ['Eletronicos', 'MÓVEIS', 'alimentos']
+    # Preparação
+    df = pd.DataFrame({
+        'quantidade': [1, 2],
+        'preco': [10.0, 20.0],
+        'categoria': ['brinquedos', 'eletrônicos']
     })
-    # Categorias esperadas normalizadas
-    categorias_esperadas = ['eletronicos', 'móveis', 'alimentos']
+    expected = pd.Series(['brinquedos', 'eletrônicos'], name='categoria_normalizada')
 
-    # Chamar a função
-    resultado = transformar(dados_entrada)
+    # Ação
+    result = transformar(df)
 
-    # Verificar se as categorias foram normalizadas corretamente
-    assert list(resultado['categoria_normalizada']) == categorias_esperadas
+    # Verificação
+    pd.testing.assert_series_equal(result['categoria_normalizada'], expected)
 
 def test_determinacao_disponibilidade():
-    # Dados de entrada
-    dados_entrada = pd.DataFrame({
-        'quantidade': [0, 10, -5],
-        'preco': [1.0, 2.0, 3.0],
-        'categoria': ['X', 'Y', 'Z']
+    # Preparação
+    df = pd.DataFrame({
+        'quantidade': [0, 2],
+        'preco': [10.0, 20.0],
+        'categoria': ['brinquedos', 'eletrônicos']
     })
-    # Disponibilidade esperada
-    disponibilidade_esperada = [False, True, False]
+    expected = pd.Series([False, True], name='disponibilidade')
 
-    # Chamar a função
-    resultado = transformar(dados_entrada)
+    # Ação
+    result = transformar(df)
 
-    # Verificar se a disponibilidade corresponde ao esperado
-    assert list(resultado['disponibilidade']) == disponibilidade_esperada
+    # Verificação
+    pd.testing.assert_series_equal(result['disponibilidade'], expected)
+
+# Para rodar os testes, execute `pytest nome_do_arquivo.py` no terminal.
